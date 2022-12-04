@@ -8,6 +8,8 @@ use std::{fs::File, io::Read, path::PathBuf};
 struct Args {
     #[clap(short = 'k', long)]
     dump_tokens: bool,
+    #[clap(short = 'a', long)]
+    dump_ast: bool,
     #[clap(short = 't', long)]
     time: bool,
     source: PathBuf,
@@ -22,17 +24,20 @@ fn main() -> std::io::Result<()> {
 
     let tokens = lexer::Token::lexer(&src)
         .spanned()
+        // .map(|(t, s)| (Span::new(args.source.as_ref(), s), t))
         .map(|(t, s)| (t, Span::new(args.source.as_ref(), s)))
         .collect::<Vec<_>>();
     if args.dump_tokens {
         println!("{:?}", &tokens)
     }
-    let ast = chainmail::parser::expr().parse(Stream::from_iter(
+    let ast = chainmail::parser::parser().parse(Stream::from_iter(
         Span::new(args.source.as_ref(), 0..0),
         tokens.into_iter(),
     ));
 
-    println!("{ast:#?}");
+    if args.dump_ast {
+        println!("{ast:#?}");
+    }
 
     Ok(())
 }

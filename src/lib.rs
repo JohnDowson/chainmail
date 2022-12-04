@@ -5,7 +5,7 @@ use std::path::Path;
 
 pub mod eval;
 pub mod lexer;
-// mod object;
+mod object;
 pub mod parser;
 
 type Spanned<'p, T> = (Span<'p>, T);

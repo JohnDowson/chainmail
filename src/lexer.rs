@@ -11,7 +11,7 @@ pub enum Token<'s> {
     String(&'s str),
 
     #[regex("[0-9]+", |l| l.slice().parse())]
-    Integer(u64),
+    Integer(i64),
 
     #[regex(r"[0-9]*\.[0-9]+", |l| l.slice())]
     Float(&'s str),
@@ -21,17 +21,23 @@ pub enum Token<'s> {
     #[regex(r":[_a-zA-Z][_a-zA-Z0-9]*", |l| Intern::new(l.slice()[1..].into()))]
     Symbol(Intern<String>),
 
-    #[token(".")]
-    Field,
-
     #[token(",")]
     Comma,
+    #[token(";")]
+    Semicol,
+    #[token("=")]
+    Assign,
 
+    #[token("let")]
+    KwLet,
+
+    #[token(".")]
+    Field,
     #[token("<|")]
     Send,
     #[token("|")]
     Pipe,
-    #[token("\\")]
+    #[token(r"\")]
     Lambda,
     #[token("->")]
     ThinArrow,
@@ -68,7 +74,7 @@ pub enum Token<'s> {
 
     #[regex(r"[ \t\f]+", logos::skip)]
     Whitespace,
-    #[regex(r"\n+")]
+    #[regex(r"\n+", logos::skip)]
     Newline,
 
     #[error]

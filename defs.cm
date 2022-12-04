@@ -1,0 +1,37 @@
+message Hello
+    person: String
+end
+
+class Dog
+    responds Hello do
+        "Bark, bark!"
+    end
+end
+
+class Person
+    name: String
+
+    responds Hello do
+        "Hello, #{person}"
+    end
+end
+
+extend Person
+    responds Dog do
+        IO <| Print("#{name} is petting a dog")
+    end
+end
+
+let bob = Person(name: "Bob")
+let msg = Hello(person: "Alice")
+bob <| msg
+
+let alice = Person(name: "Alice")
+let people = [bob, alice]
+let predicate = \p -> p.name == "Alice"
+let alices = people <| Filter(predicate: predicate)
+
+let not_true = predicate(bob)
+
+let comparator = \a, b -> a.name <=> b.name
+let difference = comparator(bob, alice)

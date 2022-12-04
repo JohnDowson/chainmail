@@ -70,7 +70,6 @@ dependencies = [
  "ariadne",
  "chumsky",
  "clap",
- "fnv",
  "internment",
  "logos",
  "somok",
