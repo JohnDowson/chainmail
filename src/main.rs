@@ -24,7 +24,6 @@ fn main() -> std::io::Result<()> {
 
     let tokens = lexer::Token::lexer(&src)
         .spanned()
-        // .map(|(t, s)| (Span::new(args.source.as_ref(), s), t))
         .map(|(t, s)| (t, Span::new(args.source.as_ref(), s)))
         .collect::<Vec<_>>();
     if args.dump_tokens {

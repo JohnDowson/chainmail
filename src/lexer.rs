@@ -25,11 +25,21 @@ pub enum Token<'s> {
     Comma,
     #[token(";")]
     Semicol,
+    #[token(":")]
+    Colon,
     #[token("=")]
     Assign,
 
     #[token("let")]
     KwLet,
+    #[token("end")]
+    KwEnd,
+    #[token("do")]
+    KwDo,
+    #[token("class")]
+    KwClass,
+    #[token("responds")]
+    KwResp,
 
     #[token(".")]
     Field,
